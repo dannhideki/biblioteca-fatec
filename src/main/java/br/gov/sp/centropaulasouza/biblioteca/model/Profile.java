@@ -1,5 +1,6 @@
 package br.gov.sp.centropaulasouza.biblioteca.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,7 +10,10 @@ import javax.persistence.Table;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
+import org.hibernate.annotations.ForeignKey;
 import org.hibernate.annotations.NaturalId;
 
 /**
@@ -18,7 +22,7 @@ import org.hibernate.annotations.NaturalId;
  */
 @Entity
 @Table(name = "PROFILE")
-public class Profile {
+public class Profile implements Serializable {
 
     @Id
     @GeneratedValue
@@ -29,6 +33,7 @@ public class Profile {
 
     @Column(name = "last_name")
     private String lastName;
+    
     @NaturalId
     private String email;
     private String phone;
@@ -41,9 +46,21 @@ public class Profile {
     private Date dataNascimento;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @ForeignKey(name = "fk_profile_user_id")
     @MapsId
     private Usuario user;
 
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date dataAlteracao;
+
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date dataCadastro;
+
+    @OneToOne
+    @ForeignKey(name = "fk_profile_categoria_profile_id")
+    @JoinColumn(name = "categoria_profile_id", referencedColumnName = "codigo")
+    private CategoriaProfile categoriaProfile;
+    
     //getter and setters
     public Integer getId() {
         return id;
@@ -123,5 +140,29 @@ public class Profile {
 
     public void setCelphone(String celphone) {
         this.celphone = celphone;
+    }
+
+    public Date getDataAlteracao() {
+        return dataAlteracao;
+    }
+
+    public void setDataAlteracao(Date dataAlteracao) {
+        this.dataAlteracao = dataAlteracao;
+    }
+
+    public Date getDataCadastro() {
+        return dataCadastro;
+    }
+
+    public void setDataCadastro(Date dataCadastro) {
+        this.dataCadastro = dataCadastro;
+    }
+
+    public CategoriaProfile getCategoriaProfile() {
+        return categoriaProfile;
+    }
+
+    public void setCategoriaProfile(CategoriaProfile categoriaProfile) {
+        this.categoriaProfile = categoriaProfile;
     }
 }

@@ -39,4 +39,16 @@ public class UsuarioDaoImpl implements UsuarioDao {
         session.saveOrUpdate(user);
         tx.commit();
     }
+
+    public Usuario getUsuarioById(Integer id) {
+        Session session = sessionFactory.openSession();
+        return (Usuario) session.load(Usuario.class, id);
+    }
+
+    public Usuario getUsuarioByLogin(String login) {
+        Session session = sessionFactory.openSession();
+        Usuario user = (Usuario) session.createQuery("SELECT u FROM Usuario u WHERE u.login = :login")
+                .setParameter("login", login).uniqueResult();
+        return user;
+    }
 }

@@ -12,13 +12,10 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <!--<spring.version>4.0.0.RELEASE</spring.version>-->
         <spring.version>4.1.1.RELEASE</spring.version>
-        <!--<spring.security.version>4.0.0.RELEASE</spring.security.version>-->
         <spring.security.version>3.2.3.RELEASE</spring.security.version>
         <jsf.version>2.2.10</jsf.version>
         <primefaces.version>5.2</primefaces.version>
-        <primefacesthemes.version>1.0.8</primefacesthemes.version>
         <hibernate.version>4.1.4.Final</hibernate.version>
         <mysql.connector.version>5.1.35</mysql.connector.version>
     </properties>
@@ -102,8 +99,6 @@
             <artifactId>mail</artifactId>
             <version>1.4.7</version>
         </dependency>
-
-
         
         <!-- Spring Security -->
         <dependency>
@@ -156,14 +151,7 @@
             <artifactId>primefaces</artifactId>  
             <version>${primefaces.version}</version>  
         </dependency> 
-        
-        <!-- Primefaces Theme Library 
-               <dependency>
-                   <groupId>org.primefaces.extensions</groupId>
-                   <artifactId>all-themes</artifactId>
-                   <version>${primefacesthemes.version}</version>
-               </dependency>
-        -->
+
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
@@ -212,8 +200,6 @@
             <artifactId>c3p0</artifactId>
             <version>0.9.1.2</version>
         </dependency>
-
-
         
         <!-- connect to mysql -->
         <dependency>
@@ -221,6 +207,26 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql.connector.version}</version>
         </dependency>
+        
+        <!--        beanio parse-->
+        <dependency>
+            <groupId>org.beanio</groupId>
+            <artifactId>beanio</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+        <!--jexcel api-->
+        <dependency>
+            <groupId>net.sourceforge.jexcelapi</groupId>
+            <artifactId>jxl</artifactId>
+            <version>2.6.12</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.9</version>
+        </dependency>
+
     </dependencies>
 
     <build>

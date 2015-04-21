@@ -33,7 +33,7 @@
         <property name="packagesToScan">
             <list>
                 <value>br.gov.sp.centropaulasouza.biblioteca.model</value>
-                <value>br.gov.sp.centropaulasouza.biblioteca..service</value>
+                <value>br.gov.sp.centropaulasouza.biblioteca.service</value>
             </list>
         </property>
         <property name="hibernateProperties">

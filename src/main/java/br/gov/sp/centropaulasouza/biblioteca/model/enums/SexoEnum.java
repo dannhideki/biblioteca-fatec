@@ -1,4 +1,4 @@
-package br.gov.sp.centropaulasouza.biblioteca.model;
+package br.gov.sp.centropaulasouza.biblioteca.model.enums;
 
 /**
  *

@@ -1,14 +1,18 @@
 package br.gov.sp.centropaulasouza.biblioteca.controller;
 
 import br.gov.sp.centropaulasouza.biblioteca.model.Profile;
-import br.gov.sp.centropaulasouza.biblioteca.model.RoleEnum;
-import br.gov.sp.centropaulasouza.biblioteca.model.SexoEnum;
+import br.gov.sp.centropaulasouza.biblioteca.model.enums.RoleEnum;
+import br.gov.sp.centropaulasouza.biblioteca.model.enums.SexoEnum;
 import br.gov.sp.centropaulasouza.biblioteca.model.Usuario;
 import br.gov.sp.centropaulasouza.biblioteca.service.ProfileService;
+import br.gov.sp.centropaulasouza.biblioteca.service.UsuarioService;
+import br.gov.sp.centropaulasouza.biblioteca.utils.ServiceFinder;
 import br.gov.sp.centropaulasouza.biblioteca.utils.date.ManipulateDate;
+import br.gov.sp.centropaulasouza.biblioteca.utils.mail.SimpleRegistrationService;
 import br.gov.sp.centropaulasouza.biblioteca.utils.security.GenerateMD5;
 import br.gov.sp.centropaulasouza.biblioteca.utils.security.GenerateValidation;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.SessionScoped;
@@ -31,6 +35,9 @@ public class UsuarioController implements Serializable {
 
     @Autowired
     private ProfileService profileService;
+    
+    @Autowired
+    private UsuarioService usuarioService;
 
     private Usuario user;
     private Profile profile;
@@ -43,17 +50,19 @@ public class UsuarioController implements Serializable {
     public void init() {
         user = new Usuario();
         profile = new Profile();
+        
     }
 
     public String save() {
         user.setPassword(GenerateMD5.generate(user.getPassword()));
         user.setValidation(GenerateValidation.keyValidation());
         user.getPermissions().add(RoleEnum.ROLE_COMMON.getValue());
-        user.setEnable(false);
+        user.setEnable(true);
+        user.setDataCadastro(new Date());
 
         profile.setUser(user);
         profile.setDataNascimento(ManipulateDate.getDate(year, month, day));
-
+        profile.setDataCadastro(new Date());
         profileService.save(profile);
 
         //Para enviar email de confirmação de cadastro
@@ -64,15 +73,13 @@ public class UsuarioController implements Serializable {
 
     public String getLoginUsuario() {
         Usuario usuarioLogado = new Usuario();
-        SecurityContext context = SecurityContextHolder.getContext();  
-        if(context instanceof SecurityContext)  
-        {  
-            Authentication authentication = context.getAuthentication();  
-            if(authentication instanceof Authentication)  
-            {  
-                 usuarioLogado.setLogin(((User)authentication.getPrincipal()).getUsername());  
-            }  
-        } 
+        SecurityContext context = SecurityContextHolder.getContext();
+        if (context instanceof SecurityContext) {
+            Authentication authentication = context.getAuthentication();
+            if (authentication instanceof Authentication) {
+                usuarioLogado.setLogin(((User) authentication.getPrincipal()).getUsername());
+            }
+        }
         return usuarioLogado.getLogin();
     }
 
