@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -11,13 +12,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.UniqueConstraint;
+
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
-import org.hibernate.annotations.ForeignKey;
 
 /**
  *
@@ -27,9 +27,11 @@ import org.hibernate.annotations.ForeignKey;
 @Table(name = "USUARIO")
 public class Usuario implements Serializable {
 
-    @Id
+	private static final long serialVersionUID = 8175864346693673114L;
+
+	@Id
     @GeneratedValue
-    private int id;
+    private Long id;
 
     @Column(name = "enable", columnDefinition = "BOOLEAN")
     private boolean enable;
@@ -56,11 +58,11 @@ public class Usuario implements Serializable {
     }
 
     //getters and setters
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -119,4 +121,73 @@ public class Usuario implements Serializable {
     public void setDataCadastro(Date dataCadastro) {
         this.dataCadastro = dataCadastro;
     }
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((dataAlteracao == null) ? 0 : dataAlteracao.hashCode());
+		result = prime * result
+				+ ((dataCadastro == null) ? 0 : dataCadastro.hashCode());
+		result = prime * result + (enable ? 1231 : 1237);
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((login == null) ? 0 : login.hashCode());
+		result = prime * result
+				+ ((password == null) ? 0 : password.hashCode());
+		result = prime * result
+				+ ((permissions == null) ? 0 : permissions.hashCode());
+		result = prime * result
+				+ ((validation == null) ? 0 : validation.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Usuario other = (Usuario) obj;
+		if (dataAlteracao == null) {
+			if (other.dataAlteracao != null)
+				return false;
+		} else if (!dataAlteracao.equals(other.dataAlteracao))
+			return false;
+		if (dataCadastro == null) {
+			if (other.dataCadastro != null)
+				return false;
+		} else if (!dataCadastro.equals(other.dataCadastro))
+			return false;
+		if (enable != other.enable)
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (login == null) {
+			if (other.login != null)
+				return false;
+		} else if (!login.equals(other.login))
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (permissions == null) {
+			if (other.permissions != null)
+				return false;
+		} else if (!permissions.equals(other.permissions))
+			return false;
+		if (validation == null) {
+			if (other.validation != null)
+				return false;
+		} else if (!validation.equals(other.validation))
+			return false;
+		return true;
+	}
 }

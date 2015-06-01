@@ -1,6 +1,8 @@
 <html>
 <body>
-   <h3>Olá ${profile.firstName},você registrou na Biblioteca da Fatec</h3>
-   <a href="${context}public/activate.xhtml?key=${profile.user.validation}">Clique aqui para validar seu cadastro</a>.
+   <h3>Olá ${pessoa.firstName},você registrou na Biblioteca da Fatec</h3>
+   <p>Para efetivar o seu cadastro, 
+   <a href="${context}public/activate.xhtml?key=${pessoa.user.validation}">clique aqui!</a>.
+   </p>
 </body>
 </html>

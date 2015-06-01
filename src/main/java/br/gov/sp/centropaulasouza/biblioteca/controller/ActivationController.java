@@ -1,11 +1,14 @@
 package br.gov.sp.centropaulasouza.biblioteca.controller;
 
-import br.gov.sp.centropaulasouza.biblioteca.service.UsuarioService;
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
+import br.gov.sp.centropaulasouza.biblioteca.model.Usuario;
+import br.gov.sp.centropaulasouza.biblioteca.service.UsuarioService;
 
 /**
  *
@@ -20,13 +23,23 @@ public class ActivationController {
     
     @Autowired
     private UsuarioService userService;
- 
+    
     private boolean valid = false;
     
     public void validaUsuario(){
-        if(userService.existsValidation(getKey())){
+        if(existsValidation()){
             setValid(true);
-        } 
+        }else{
+        	setValid(false);
+        }
+    }
+    
+    public boolean existsValidation(){
+    	Usuario user = userService.existsValidation(getKey());
+    	if(user != null){
+    		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", user);
+    	}
+    	return user != null;
     }
  
     public String getKey() {

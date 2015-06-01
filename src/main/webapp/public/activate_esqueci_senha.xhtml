@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<f:metadata>
+	<f:viewParam name="key" value="#{activation.key}" />
+	<f:viewAction action="#{activation.validaUsuario()}" />
+</f:metadata>
+
+<ui:composition template="/public/template.xhtml">
+
+	<ui:define name="nav_bar">
+		<ui:include src="top_bar.xhtml" />
+		<ui:include src="search_bar.xhtml" />
+	</ui:define>
+
+	<ui:define name="container">
+		<div class="row">
+			<h:panelGroup layout="block" rendered="#{activation.valid}">
+				<div class="form-group">
+					<h3>Preencha a sua senha para efetuar a troca do seu cadastro
+						da biblioteca da Fatec!</h3>
+					<br />
+				</div>
+				<h:form id="trocaSenhaForm" class="form-horizontal" role="form">
+					<div class="form-group">
+						<h:outputLabel for="password" value="Nova Senha *"
+							styleClass="col-sm-3 control-label" />
+						<div class="col-sm-6">
+							<h:inputSecret value="#{usuarioController.newPassword}"
+								id="password" styleClass="form-control"
+								pt:placeholder="Digite aqui sua senha entre 6 e 20 caracteres"
+								required="true"
+								requiredMessage="é necessário que você informe sua senha."
+								validatorMessage="a senha deve conter entre 6 e 20 caracteres."
+								binding="#{passwordComponent}">
+								<f:validateLength minimum="6" maximum="20" />
+								<f:ajax event="blur" render="m_password" />
+							</h:inputSecret>
+							<h:message id="m_password" for="password" style="color:#D74937;" />
+						</div>
+					</div>
+					<div class="form-group">
+						<h:outputLabel for="confirmPassword"
+							value="Confirme a nova senha *"
+							styleClass="col-sm-3 control-label" />
+						<div class="col-sm-6">
+							<h:inputSecret id="confirmPassword"
+								required="#{not empty passwordComponent.value}"
+								styleClass="form-control"
+								pt:placeholder="Confirme aqui sua senha"
+								requiredMessage="é necessário que você informe a confirmação de sua senha.">
+								<f:validator validatorId="confirmPasswordValidator" />
+								<f:attribute name="passwordComponent"
+									value="#{passwordComponent}" />
+								<f:ajax event="blur" execute="confirmPassword password"
+									render="m_confirm" />
+							</h:inputSecret>
+							<h:message id="m_confirm" for="confirmPassword"
+								style="color:#D74937;" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-3 col-sm-10">
+							<p:captcha label="Captcha" language="pt-BR" theme="white"
+								id="captcha"
+								requiredMessage="é necessário que você informe os códigos secretos"
+								validatorMessage="códigos secretos inválidos" />
+							<h:message id="m_captcha" for="captcha" style="color:#D74937;" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-3 col-sm-10">
+							<h:commandButton action="#{usuarioController.trocaSenha()}"
+								value="Trocar senha" styleClass="btn btn-default" />
+						</div>
+					</div>
+				</h:form>
+			</h:panelGroup>
+			<h:panelGroup layout="block" rendered="#{!activation.valid}">
+				<p>Caso você já tenha trocado a sua senha, digo desde já que só é possível trocá-la uma única vez com esse email...</p>
+				<p>Mas, caso seja a primeira vez...</p>
+				<p>Ops, algo inesperado aconteceu... Por favor entre em seu
+					e-mail e tente novamente.</p>
+				<h:form>
+				</h:form>
+			</h:panelGroup>
+		</div>
+	</ui:define>
+	<ui:define name="title">
+            Troca de senha
+        </ui:define>
+</ui:composition>
+</html>

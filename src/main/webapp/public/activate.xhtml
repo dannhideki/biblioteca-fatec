@@ -13,7 +13,7 @@
 
         <ui:define name="head">
             <ui:fragment rendered="#{activation.valid}">
-                <meta http-equiv="refresh" content="6;url=login.xhtml" />
+                <meta http-equiv="refresh" content="6;URL=login.jsf" />
             </ui:fragment>
         </ui:define>
 
@@ -32,7 +32,7 @@
                     </p>
                 </h:panelGroup>
                 <h:panelGroup layout="block" rendered="#{!activation.valid}">
-                    <p>A ativação falhou! Por favor entre em seu e-mail novamente e tente mais uma vez.</p>
+                    <p>A ativação falhou! Por favor entre em seu e-mail e tente novamente.</p>
                     <h:form>
                     </h:form>
                 </h:panelGroup>

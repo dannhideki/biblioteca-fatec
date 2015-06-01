@@ -2,16 +2,15 @@ package br.gov.sp.centropaulasouza.biblioteca.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Column;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+
 import org.hibernate.annotations.ForeignKey;
 
 /**
@@ -22,14 +21,16 @@ import org.hibernate.annotations.ForeignKey;
 @Table(name = "EMPRESTIMO_RESERVA")
 public class EmprestimoReserva implements Serializable {
 
-    @Id
+	private static final long serialVersionUID = 8127330971930970587L;
+
+	@Id
     @GeneratedValue
     private Integer codigo;
 
     @ManyToOne
     @ForeignKey(name = "fk_emprestimo_reserva_profile_id")
     @JoinColumn(name = "profile_id")
-    private Profile profile;
+    private Pessoa profile;
 
     private String tipo;
     private double valorTotalMulta;
@@ -65,11 +66,11 @@ public class EmprestimoReserva implements Serializable {
         this.codigo = codigo;
     }
 
-    public Profile getProfile() {
+    public Pessoa getProfile() {
         return profile;
     }
 
-    public void setProfile(Profile profile) {
+    public void setProfile(Pessoa profile) {
         this.profile = profile;
     }
 
@@ -145,4 +146,94 @@ public class EmprestimoReserva implements Serializable {
         this.usuarioAlteracao = usuarioAlteracao;
     }
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
+		result = prime * result
+				+ ((dataAlteracao == null) ? 0 : dataAlteracao.hashCode());
+		result = prime * result
+				+ ((dataCadastro == null) ? 0 : dataCadastro.hashCode());
+		result = prime * result
+				+ ((dataEmprestimo == null) ? 0 : dataEmprestimo.hashCode());
+		result = prime * result + ((profile == null) ? 0 : profile.hashCode());
+		result = prime * result
+				+ ((qtdadeDias == null) ? 0 : qtdadeDias.hashCode());
+		result = prime * result + ((tipo == null) ? 0 : tipo.hashCode());
+		result = prime
+				* result
+				+ ((usuarioAlteracao == null) ? 0 : usuarioAlteracao.hashCode());
+		result = prime * result
+				+ ((usuarioCadastro == null) ? 0 : usuarioCadastro.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(valorFixoMulta);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(valorTotalMulta);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EmprestimoReserva other = (EmprestimoReserva) obj;
+		if (codigo == null) {
+			if (other.codigo != null)
+				return false;
+		} else if (!codigo.equals(other.codigo))
+			return false;
+		if (dataAlteracao == null) {
+			if (other.dataAlteracao != null)
+				return false;
+		} else if (!dataAlteracao.equals(other.dataAlteracao))
+			return false;
+		if (dataCadastro == null) {
+			if (other.dataCadastro != null)
+				return false;
+		} else if (!dataCadastro.equals(other.dataCadastro))
+			return false;
+		if (dataEmprestimo == null) {
+			if (other.dataEmprestimo != null)
+				return false;
+		} else if (!dataEmprestimo.equals(other.dataEmprestimo))
+			return false;
+		if (profile == null) {
+			if (other.profile != null)
+				return false;
+		} else if (!profile.equals(other.profile))
+			return false;
+		if (qtdadeDias == null) {
+			if (other.qtdadeDias != null)
+				return false;
+		} else if (!qtdadeDias.equals(other.qtdadeDias))
+			return false;
+		if (tipo == null) {
+			if (other.tipo != null)
+				return false;
+		} else if (!tipo.equals(other.tipo))
+			return false;
+		if (usuarioAlteracao == null) {
+			if (other.usuarioAlteracao != null)
+				return false;
+		} else if (!usuarioAlteracao.equals(other.usuarioAlteracao))
+			return false;
+		if (usuarioCadastro == null) {
+			if (other.usuarioCadastro != null)
+				return false;
+		} else if (!usuarioCadastro.equals(other.usuarioCadastro))
+			return false;
+		if (Double.doubleToLongBits(valorFixoMulta) != Double
+				.doubleToLongBits(other.valorFixoMulta))
+			return false;
+		if (Double.doubleToLongBits(valorTotalMulta) != Double
+				.doubleToLongBits(other.valorTotalMulta))
+			return false;
+		return true;
+	}
 }

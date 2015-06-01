@@ -1,11 +1,12 @@
 package br.gov.sp.centropaulasouza.biblioteca.dao;
 
-import br.gov.sp.centropaulasouza.biblioteca.model.Usuario;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+
 import org.springframework.stereotype.Repository;
+
+import br.gov.sp.centropaulasouza.biblioteca.model.Usuario;
 
 /**
  *
@@ -14,41 +15,45 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class UsuarioDaoImpl implements UsuarioDao {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+	@PersistenceContext
+	private EntityManager em;
 
-    @Override
-    public boolean existsValidation(String validation) {
-        Session session = sessionFactory.openSession();
+	public Usuario existsValidation(String validation) {
+		try{
+			Usuario user = em.createQuery("SELECT u FROM Usuario u WHERE u.validation = :validation",Usuario.class)
+					.setParameter("validation", validation).getSingleResult();
+			if (user != null) {
+				user.setEnable(true);
+				user.setValidation("");
+				save(user);
+			}
+			return user;
+		}catch(NoResultException ne){
+			return null;
+		}
+	}
 
-        Usuario user = (Usuario) session.createQuery("SELECT u FROM Usuario u WHERE u.validation = :validation")
-                .setParameter("validation", validation).uniqueResult();
+	@Override
+	public void save(Usuario user) {
+		if(user.getId() == null){
+			em.persist(user);
+		}else{
+			em.merge(user);
+		}
+	}
 
-        if (user != null) {
-            user.setEnable(true);
-            user.setValidation("");
-            save(user, session);
-            return true;
-        }
-        return false;
-    }
+	public Usuario getUsuarioById(Integer id) {
+		return em.find(Usuario.class, id);
+	}
 
-    @Override
-    public void save(Usuario user, Session session) {
-        Transaction tx = session.beginTransaction();
-        session.saveOrUpdate(user);
-        tx.commit();
-    }
-
-    public Usuario getUsuarioById(Integer id) {
-        Session session = sessionFactory.openSession();
-        return (Usuario) session.load(Usuario.class, id);
-    }
-
-    public Usuario getUsuarioByLogin(String login) {
-        Session session = sessionFactory.openSession();
-        Usuario user = (Usuario) session.createQuery("SELECT u FROM Usuario u WHERE u.login = :login")
-                .setParameter("login", login).uniqueResult();
-        return user;
-    }
+	public Usuario getUsuarioByLogin(String login) {
+		Usuario user = new Usuario();
+		try{
+			user = em.createQuery("SELECT u FROM Usuario u WHERE u.login = :login",Usuario.class)
+					.setParameter("login", login).getSingleResult();
+		}catch(NoResultException ne){
+			ne.printStackTrace();
+		}
+		return user;
+	}
 }

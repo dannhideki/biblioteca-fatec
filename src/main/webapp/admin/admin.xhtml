@@ -1,25 +1,90 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:ui="http://java.sun.com/jsf/facelets">
- 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
 <ui:composition template="/public/template.xhtml">
-    <ui:define name="nav_bar">
-        <ui:include src="top_bar_register_book.xhtml"/>
-        <ui:include src="/public/search_bar.xhtml"/>
-    </ui:define>
-     
-    <ui:define name="container">
-        <div class="row">
-            <span>#{indexController.message}</span>                                 
-        </div>
+	<ui:define name="nav_bar">
+		<ui:include src="top_bar_register_book.xhtml" />
+		<ui:include src="/public/search_bar.xhtml" />
+	</ui:define>
+	<ui:define name="container">
+		<h:outputStylesheet library="bootstrap/css" name="style.css" />
+		<div class="row">
+			<span>#{indexController.message}</span>
+		</div>
+		<p:carousel id="carousel" value="#{acervoController.acervoList}"
+			headerText="Livros" var="livro"   autoPlayInterval="10000"
+    effect="fade"
+			itemStyleClass="photo" circular="true">
+				<h:panelGrid columns="2" cellpadding="5">
+					<f:facet name="header">
+						<h:outputText value="Id:" />
+						<h:outputText value="#{livro.codigo}" />
+					</f:facet>
 
+					<h:panelGrid>
+						<h:outputText value="Descricao" />
+						<h:outputText value="#{livro.descricao}" />
 
-        
-        
-    </ui:define>    
-    <ui:define name="title">        
+						<p:commandButton title="View Detail"
+							value="Clique aqui para maiores detalhes"
+							icon="ui-icon-folder-collapsed">
+							<f:setPropertyActionListener value="#{livro}"
+								target="#{acervoController.selectedAcervo}" />
+						</p:commandButton>
+					</h:panelGrid>
+
+				</h:panelGrid>
+			<f:facet name="footer">
+                    Total de acervo atual: #{acervoController.acervoList.size()} .
+                </f:facet>
+		</p:carousel>
+		
+		
+		<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+  </ol>
+ 
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner">
+    <div class="item active">
+      <img src="http://placehold.it/1200x315" alt="..." />
+      <div class="carousel-caption">
+          <h3>Caption Text 1</h3>
+      </div>
+    </div>
+    <div class="item">
+      <img src="http://placehold.it/1200x315" alt="..." />
+      <div class="carousel-caption">
+          <h3>Caption Text</h3>
+      </div>
+    </div>
+    <div class="item">
+      <img src="http://placehold.it/1200x315" alt="..." />
+      <div class="carousel-caption">
+          <h3>Caption Text</h3>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- Controls -->
+  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+  </a>
+  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+  </a>
+</div> <!-- Carousel -->
+	</ui:define>
+	<ui:define name="title">        
             Bem-vindo a Biblioteca da Fatec       
-    </ui:define>
+        </ui:define>
 </ui:composition>
 </html>

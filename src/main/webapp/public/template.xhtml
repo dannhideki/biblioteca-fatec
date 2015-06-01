@@ -1,52 +1,72 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html">
 
-    <h:head>
-        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-        <title>
-            <ui:insert name="title">
-                Biblioteca da Fatec
-            </ui:insert>
-        </title>
-        <h:outputStylesheet library="bootstrap/css" name="bootstrap.min.css" />
-        <h:outputStylesheet library="bootstrap/css" name="bootstrap-theme.min.css" />
-        <h:outputScript library="jquery" name="jquery-1.11.2.min.js" />
-        <h:outputScript library="bootstrap/js" name="bootstrap.min.js" />
-        <h:outputScript library="jquery" name="jquery.maskedinput.min.js" />
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<ui:insert name="head"></ui:insert>
+	<title><ui:insert name="title">Biblioteca da Fatec</ui:insert></title>
+	<h:outputStylesheet library="bootstrap/css" name="style.css" />
+	<h:outputStylesheet library="bootstrap/css" name="bootstrap.css" />
+	<h:outputStylesheet library="bootstrap/css" name="bootstrap-theme.min.css" />
+	<h:outputScript library="jquery" name="jquery-1.11.2.min.js" />
+	<h:outputScript library="bootstrap/js" name="bootstrap.min.js" />
+	<h:outputScript library="jquery" name="jquery.maskedinput.min.js" />
 
-        <script>
-            $a = jQuery.noConflict();
-            $a(document).ready(function () {
-                var heightWindow = $a(window).height();
-                var heightBody = document.body.clientHeight;
-                if (heightWindow > heightBody) {
-                    $a("#footer").css('position', 'fixed');
-                    $a("#footer").css('bottom', '0');
-                }
-            });
-            $('input.phone').mask('#.##0,00', {reverse: true});
-        </script>
+	<!--   definindo o estilo aqui o problema se resolve -->
+	<style type="text/css">
+		.photo {
+			width: 400px;
+			height: 250px;
+		}
+		.ui-carousel .ui-carousel-header {
+			padding-top: 10px;
+			padding-bottom: 35px;
+			padding-right: 10px;
+			padding-left: 10px;
+		}
+		.ui-carousel .ui-carousel-footer {
+			padding-bottom: 30px;
+		}
+	</style>
 
-    </h:head>
-    <h:body>
-        <div>
-            <ui:insert name="nav_bar">
+	<script>
+		$a = jQuery.noConflict();
+		$a(document).ready(function() {
+			var heightWindow = $a(window).height();
+			var heightBody = document.body.clientHeight;
+			if (heightWindow > heightBody) {
+				$a("#footer").css('position', '0');
+				$a("#footer").css('bottom', '0');
+			}
+		});
+		var j = jQuery.noConflict();
+		// Do something with jQuery
+		j("div p").hide();
+		// Do something with another library's $()
+		$("content").style.display = 'none';
+	</script>
 
-            </ui:insert>
-        </div>
+</h:head>
+<h:body>
+	<div>
+		<ui:insert name="nav_bar">
+		</ui:insert>
+	</div>
 
-        <div class="container" >
-            <ui:insert name="container">
-                
-            </ui:insert>
-        </div>    
-        <div id="footer" style="padding-top:30px; margin-top:90px; width:100%; background-color: #EEEEEE;" role="footer">
-            <ui:insert name="nav_footer">
-                <ui:include src="footer.xhtml" />
-            </ui:insert>
-        </div>    
-    </h:body>
+	<div class="container">
+		<ui:insert name="container">
+
+		</ui:insert>
+	</div>
+	<div id="footer"
+		style="padding-top: 30px; margin-top: 90px; width: 100%; background-color: #EEEEEE;"
+		role="footer">
+		<ui:insert name="nav_footer">
+			<ui:include src="footer.xhtml" />
+		</ui:insert>
+	</div>
+</h:body>
 </html>

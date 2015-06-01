@@ -11,15 +11,20 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Daniel Hideki
  */
 @Service
-@Transactional
+@Transactional(readOnly=false)
 public class UsuarioService {
     
     @Autowired
     private UsuarioDaoImpl userDao;
 
-    @Transactional
-    public boolean existsValidation(String validation) {
+    @Transactional(readOnly=true)
+    public Usuario existsValidation(String validation) {
         return userDao.existsValidation(validation);
+    }
+    
+    @Transactional(readOnly=true)
+    public void saveOrUpdate(Usuario user) {
+        userDao.save(user);
     }
     
     public Usuario getUsuarioByLogin(String login){

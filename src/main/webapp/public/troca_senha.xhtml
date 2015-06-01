@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+<h:head>
+	<h:outputStylesheet library="custom/css" name="custom.css" />
+</h:head>
+<h:body>
+	<ui:composition template="/public/template.xhtml">
+		<ui:define name="nav_bar">
+			<ui:include src="top_bar.xhtml" />
+		</ui:define>
+		<ui:define name="container">
+			<div class="row" style="padding-top: 100px;">
+				<div class="col-md-8">
+					<h1>Esqueceu a sua senha de acesso a biblioteca da Fatec?</h1>
+					<h3>Sem problemas... Me envie seu e-mail que envio para você o
+						formulário de troca de senha!</h3>
+					<br />
+					<h:form id="registerForm" class="form-horizontal" role="form">
+
+						<div class="form-group">
+							<h:outputLabel for="inputEmail" value="Email *"
+								styleClass="col-sm-3 control-label" />
+							<div class="col-sm-5">
+								<h:inputText value="#{usuarioController.pessoa.email}"
+									required="true" class="form-control" id="inputEmail"
+									style="width:316px;"
+									pt:placeholder="Digite aqui seu email"
+									requiredMessage="É necessário que você informe seu email.">
+								</h:inputText>
+								<h:message id="m_inputEmail" for="inputEmail"
+									style="color:#D74937;" />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-3 col-sm-10">
+								<p:captcha label="Captcha" language="pt-BR" theme="white"
+									id="captcha"
+									requiredMessage="é necessário que você informe os códigos secretos"
+									validatorMessage="códigos secretos inválidos" />
+								<h:message id="m_captcha" for="captcha" style="color:#D74937;" />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-3 col-sm-10">
+								<h:commandButton
+									action="#{usuarioController.pedidoTrocaSenha()}"
+									value="Trocar a senha" styleClass="btn btn-default" />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-3 col-sm-10">
+								<span> * Campos obrigatórios </span>
+							</div>
+						</div>
+					</h:form>
+				</div>
+			</div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

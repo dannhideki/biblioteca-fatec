@@ -1,8 +1,11 @@
 package br.gov.sp.centropaulasouza.biblioteca.model;
 
 import br.gov.sp.centropaulasouza.biblioteca.model.enums.TipoAquisicaoEnum;
+
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -11,8 +14,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+
 import org.hibernate.annotations.ForeignKey;
 
 /**
@@ -23,7 +28,9 @@ import org.hibernate.annotations.ForeignKey;
 @Table(name = "ACERVO")
 public class Acervo implements Serializable {
 
-    @Id
+	private static final long serialVersionUID = -2163672556051337781L;
+	
+	@Id
     @GeneratedValue
     private Integer codigo;
     private String descricao;
@@ -57,6 +64,11 @@ public class Acervo implements Serializable {
     @ForeignKey(name = "fk_acervo_codigo_editora")
     @JoinColumn(name = "codigo_editora", referencedColumnName = "codigo")
     private Editora editora;
+
+    @OneToOne
+    @ForeignKey(name = "fk_acervo_codigo_autor")
+    @JoinColumn(name = "codigo_autor", referencedColumnName = "codigo")
+    private Autor autor;
 
     private Integer numeroPagina;
     private String duracao;
@@ -283,4 +295,182 @@ public class Acervo implements Serializable {
         this.usuarioAlteracao = usuarioAlteracao;
     }
 
+    public Autor getAutor() {
+        return autor;
+    }
+
+    public void setAutor(Autor autor) {
+        this.autor = autor;
+    }
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((anoPublicacao == null) ? 0 : anoPublicacao.hashCode());
+		result = prime * result + ((autor == null) ? 0 : autor.hashCode());
+		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
+		result = prime * result
+				+ ((codigoAssunto == null) ? 0 : codigoAssunto.hashCode());
+		result = prime * result
+				+ ((codigoCategoria == null) ? 0 : codigoCategoria.hashCode());
+		result = prime * result
+				+ ((codigoGenero == null) ? 0 : codigoGenero.hashCode());
+		result = prime
+				* result
+				+ ((codigoSubAssunto == null) ? 0 : codigoSubAssunto.hashCode());
+		result = prime * result
+				+ ((codigoSubGenero == null) ? 0 : codigoSubGenero.hashCode());
+		result = prime * result
+				+ ((dataAlteracao == null) ? 0 : dataAlteracao.hashCode());
+		result = prime * result
+				+ ((dataCadastro == null) ? 0 : dataCadastro.hashCode());
+		result = prime * result
+				+ ((descricao == null) ? 0 : descricao.hashCode());
+		result = prime * result + ((duracao == null) ? 0 : duracao.hashCode());
+		result = prime * result + ((editora == null) ? 0 : editora.hashCode());
+		result = prime * result + Arrays.hashCode(ilustracao);
+		result = prime * result + ((isbn == null) ? 0 : isbn.hashCode());
+		result = prime * result + ((midia == null) ? 0 : midia.hashCode());
+		result = prime * result
+				+ ((numeroCopias == null) ? 0 : numeroCopias.hashCode());
+		result = prime * result
+				+ ((numeroPagina == null) ? 0 : numeroPagina.hashCode());
+		result = prime * result + Arrays.hashCode(pdf);
+		result = prime * result + ((resumo == null) ? 0 : resumo.hashCode());
+		result = prime * result
+				+ ((tipoAquisicao == null) ? 0 : tipoAquisicao.hashCode());
+		result = prime
+				* result
+				+ ((usuarioAlteracao == null) ? 0 : usuarioAlteracao.hashCode());
+		result = prime * result
+				+ ((usuarioCadastro == null) ? 0 : usuarioCadastro.hashCode());
+		result = prime * result
+				+ ((valorCompra == null) ? 0 : valorCompra.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Acervo other = (Acervo) obj;
+		if (anoPublicacao == null) {
+			if (other.anoPublicacao != null)
+				return false;
+		} else if (!anoPublicacao.equals(other.anoPublicacao))
+			return false;
+		if (autor == null) {
+			if (other.autor != null)
+				return false;
+		} else if (!autor.equals(other.autor))
+			return false;
+		if (codigo == null) {
+			if (other.codigo != null)
+				return false;
+		} else if (!codigo.equals(other.codigo))
+			return false;
+		if (codigoAssunto == null) {
+			if (other.codigoAssunto != null)
+				return false;
+		} else if (!codigoAssunto.equals(other.codigoAssunto))
+			return false;
+		if (codigoCategoria == null) {
+			if (other.codigoCategoria != null)
+				return false;
+		} else if (!codigoCategoria.equals(other.codigoCategoria))
+			return false;
+		if (codigoGenero == null) {
+			if (other.codigoGenero != null)
+				return false;
+		} else if (!codigoGenero.equals(other.codigoGenero))
+			return false;
+		if (codigoSubAssunto == null) {
+			if (other.codigoSubAssunto != null)
+				return false;
+		} else if (!codigoSubAssunto.equals(other.codigoSubAssunto))
+			return false;
+		if (codigoSubGenero == null) {
+			if (other.codigoSubGenero != null)
+				return false;
+		} else if (!codigoSubGenero.equals(other.codigoSubGenero))
+			return false;
+		if (dataAlteracao == null) {
+			if (other.dataAlteracao != null)
+				return false;
+		} else if (!dataAlteracao.equals(other.dataAlteracao))
+			return false;
+		if (dataCadastro == null) {
+			if (other.dataCadastro != null)
+				return false;
+		} else if (!dataCadastro.equals(other.dataCadastro))
+			return false;
+		if (descricao == null) {
+			if (other.descricao != null)
+				return false;
+		} else if (!descricao.equals(other.descricao))
+			return false;
+		if (duracao == null) {
+			if (other.duracao != null)
+				return false;
+		} else if (!duracao.equals(other.duracao))
+			return false;
+		if (editora == null) {
+			if (other.editora != null)
+				return false;
+		} else if (!editora.equals(other.editora))
+			return false;
+		if (!Arrays.equals(ilustracao, other.ilustracao))
+			return false;
+		if (isbn == null) {
+			if (other.isbn != null)
+				return false;
+		} else if (!isbn.equals(other.isbn))
+			return false;
+		if (midia == null) {
+			if (other.midia != null)
+				return false;
+		} else if (!midia.equals(other.midia))
+			return false;
+		if (numeroCopias == null) {
+			if (other.numeroCopias != null)
+				return false;
+		} else if (!numeroCopias.equals(other.numeroCopias))
+			return false;
+		if (numeroPagina == null) {
+			if (other.numeroPagina != null)
+				return false;
+		} else if (!numeroPagina.equals(other.numeroPagina))
+			return false;
+		if (!Arrays.equals(pdf, other.pdf))
+			return false;
+		if (resumo == null) {
+			if (other.resumo != null)
+				return false;
+		} else if (!resumo.equals(other.resumo))
+			return false;
+		if (tipoAquisicao != other.tipoAquisicao)
+			return false;
+		if (usuarioAlteracao == null) {
+			if (other.usuarioAlteracao != null)
+				return false;
+		} else if (!usuarioAlteracao.equals(other.usuarioAlteracao))
+			return false;
+		if (usuarioCadastro == null) {
+			if (other.usuarioCadastro != null)
+				return false;
+		} else if (!usuarioCadastro.equals(other.usuarioCadastro))
+			return false;
+		if (valorCompra == null) {
+			if (other.valorCompra != null)
+				return false;
+		} else if (!valorCompra.equals(other.valorCompra))
+			return false;
+		return true;
+	}
 }

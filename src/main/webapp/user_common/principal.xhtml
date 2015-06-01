@@ -1,15 +1,50 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html">
- 
-<body>
-    comum
-    <br />
-    <br />
-    <br />
-    <a style="padding-right: 3px;"
-        href="#{request.contextPath}/j_spring_security_logout">sair</a>
-</body>
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/public/template.xhtml">
+	<ui:define name="nav_bar">
+		<ui:include src="top_bar_logado.xhtml" />
+		<ui:include src="/public/search_bar.xhtml" />
+	</ui:define>
+	<ui:define name="container">
+		<h:outputStylesheet library="bootstrap/css" name="style.css" />
+		<div class="row">
+			<span>#{indexController.message}</span>
+		</div>
+		<p:carousel id="carousel" value="#{acervoController.acervoList}"
+			headerText="Livros" var="livro"   autoPlayInterval="10000"
+    effect="fade"
+			itemStyleClass="photo" circular="true">
+				<h:panelGrid columns="2" cellpadding="5">
+					<f:facet name="header">
+						<h:outputText value="Id:" />
+						<h:outputText value="#{livro.codigo}" />
+					</f:facet>
+
+					<h:panelGrid>
+						<h:outputText value="Descricao" />
+						<h:outputText value="#{livro.descricao}" />
+
+						<p:commandButton title="View Detail"
+							value="Clique aqui para maiores detalhes"
+							icon="ui-icon-folder-collapsed">
+							<f:setPropertyActionListener value="#{livro}"
+								target="#{acervoController.selectedAcervo}" />
+						</p:commandButton>
+					</h:panelGrid>
+
+				</h:panelGrid>
+			<f:facet name="footer">
+                    Total de acervo atual: #{acervoController.acervoList.size()} .
+                </f:facet>
+		</p:carousel>
+	</ui:define>
+	<ui:define name="title">        
+            Bem-vindo a Biblioteca da Fatec       
+        </ui:define>
+</ui:composition>
 </html>

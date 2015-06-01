@@ -1,0 +1,8 @@
+<html>
+<body>
+   <h3>Olá ${pessoa.firstName},você solicitou para trocar a sua senha na Biblioteca da Fatec</h3>
+   <p>Para trocá-la, 
+   <a href="${context}public/activate_esqueci_senha.xhtml?key=${pessoa.user.validation}">clique aqui!</a>.
+   </p>
+</body>
+</html>

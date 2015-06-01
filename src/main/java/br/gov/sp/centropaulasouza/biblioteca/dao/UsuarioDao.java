@@ -1,7 +1,6 @@
 package br.gov.sp.centropaulasouza.biblioteca.dao;
 
 import br.gov.sp.centropaulasouza.biblioteca.model.Usuario;
-import org.hibernate.Session;
 
 /**
  *
@@ -9,7 +8,5 @@ import org.hibernate.Session;
  */
 public interface UsuarioDao {
 
-    public boolean existsValidation(String validation);
-
-    public void save(Usuario user, Session session);
+    public void save(Usuario user);
 }

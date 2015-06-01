@@ -6,6 +6,7 @@ import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 import java.util.Map;
+
 import javax.el.ELException;
 import javax.faces.FacesException;
 import javax.faces.application.NavigationHandler;
@@ -16,6 +17,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ExceptionQueuedEvent;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.mail.MailSendException;
 /**
@@ -32,7 +34,7 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
     final FacesContext facesContext = FacesContext.getCurrentInstance();
  
     //Obtém um mapa do FacesContext
-    final Map requestMap = facesContext.getExternalContext().getRequestMap();
+    final Map<String, Object> requestMap = facesContext.getExternalContext().getRequestMap();
  
     //Obtém o estado atual da navegação entre páginas do JSF
     final NavigationHandler navigationHandler = facesContext.getApplication().getNavigationHandler();

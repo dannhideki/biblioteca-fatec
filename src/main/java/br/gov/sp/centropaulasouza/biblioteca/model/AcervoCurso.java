@@ -2,15 +2,16 @@ package br.gov.sp.centropaulasouza.biblioteca.model;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+
 import org.hibernate.annotations.ForeignKey;
 
 /**
@@ -21,7 +22,9 @@ import org.hibernate.annotations.ForeignKey;
 @Table(name = "ACERVO_CURSO")
 public class AcervoCurso implements Serializable {
 
-    @Id
+	private static final long serialVersionUID = 8029229663378974563L;
+
+	@Id
     @OneToOne
     @ForeignKey(name = "fk_acervo_curso_acervo_codigo")
     @JoinColumn(name = "acervo_codigo", nullable = false)
@@ -97,4 +100,64 @@ public class AcervoCurso implements Serializable {
     public void setUsuarioAlteracao(Usuario usuarioAlteracao) {
         this.usuarioAlteracao = usuarioAlteracao;
     }
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((acervo == null) ? 0 : acervo.hashCode());
+		result = prime * result + ((curso == null) ? 0 : curso.hashCode());
+		result = prime * result
+				+ ((dataAlteracao == null) ? 0 : dataAlteracao.hashCode());
+		result = prime * result
+				+ ((dataCadastro == null) ? 0 : dataCadastro.hashCode());
+		result = prime
+				* result
+				+ ((usuarioAlteracao == null) ? 0 : usuarioAlteracao.hashCode());
+		result = prime * result
+				+ ((usuarioCadastro == null) ? 0 : usuarioCadastro.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AcervoCurso other = (AcervoCurso) obj;
+		if (acervo == null) {
+			if (other.acervo != null)
+				return false;
+		} else if (!acervo.equals(other.acervo))
+			return false;
+		if (curso == null) {
+			if (other.curso != null)
+				return false;
+		} else if (!curso.equals(other.curso))
+			return false;
+		if (dataAlteracao == null) {
+			if (other.dataAlteracao != null)
+				return false;
+		} else if (!dataAlteracao.equals(other.dataAlteracao))
+			return false;
+		if (dataCadastro == null) {
+			if (other.dataCadastro != null)
+				return false;
+		} else if (!dataCadastro.equals(other.dataCadastro))
+			return false;
+		if (usuarioAlteracao == null) {
+			if (other.usuarioAlteracao != null)
+				return false;
+		} else if (!usuarioAlteracao.equals(other.usuarioAlteracao))
+			return false;
+		if (usuarioCadastro == null) {
+			if (other.usuarioCadastro != null)
+				return false;
+		} else if (!usuarioCadastro.equals(other.usuarioCadastro))
+			return false;
+		return true;
+	}
 }
